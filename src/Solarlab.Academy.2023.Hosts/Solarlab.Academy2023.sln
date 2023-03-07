@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solarlab.Academy2023.WebApi", "WebApplication1\Solarlab.Academy2023.WebApi.csproj", "{5E6FED72-677E-4C08-BCD1-43016406B709}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4A9A6E74-712F-49E2-BFFE-AF944D669E32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{56897792-16BC-4DF8-A50C-7C931D93C7F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{D90ABFB4-AAFD-48A7-9D03-13171167AD1B}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.gitignore = ..\..\.gitignore
+		..\..\LICENSE = ..\..\LICENSE
+		..\..\README.md = ..\..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E6FED72-677E-4C08-BCD1-43016406B709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E6FED72-677E-4C08-BCD1-43016406B709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E6FED72-677E-4C08-BCD1-43016406B709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E6FED72-677E-4C08-BCD1-43016406B709}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5E6FED72-677E-4C08-BCD1-43016406B709} = {4A9A6E74-712F-49E2-BFFE-AF944D669E32}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36301CEF-9A0D-46D7-AC18-D5EB62986FAC}
+	EndGlobalSection
+EndGlobal
