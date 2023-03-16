@@ -13,5 +13,5 @@ public interface IPostService
     /// <param name="dto">Модель создания объявления.</param>
     /// <param name="cancellation">Токен отмены операции.</param>
     /// <returns>Модель объявления.</returns>
-    Task<CreatePostDto> AddPost(CreatePostDto dto, CancellationToken cancellation);
+    Task<PostInfoDto> AddPost(CreatePostDto dto, CancellationToken cancellation);
 }
