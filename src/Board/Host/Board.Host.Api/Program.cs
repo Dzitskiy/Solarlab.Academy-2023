@@ -2,7 +2,11 @@ using Board.Application.AppData.Contexts.Adverts.Services;
 using Board.Application.AppData.Services;
 using Board.Contracts.Advert;
 using Board.Contracts.Interfaces;
+using Board.Infrastucture.DataAccess;
+using Board.Infrastucture.DataAccess.Interfaces;
+using Board.Infrastucture.Repository;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
