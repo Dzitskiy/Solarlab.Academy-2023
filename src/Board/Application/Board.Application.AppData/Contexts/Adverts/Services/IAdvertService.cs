@@ -1,11 +1,11 @@
-﻿using Board.Contracts.Posts;
+﻿using Board.Contracts.Advert;
 
-namespace Board.Application.AppData.Contexts.Posts.Services;
+namespace Board.Application.AppData.Contexts.Adverts.Services;
 
 /// <summary>
 /// Сервис для работы с объявлениями.
 /// </summary>
-public interface IPostService
+public interface IAdvertService
 {
     /// <summary>
     /// Создает объявление.
@@ -13,5 +13,5 @@ public interface IPostService
     /// <param name="dto">Модель создания объявления.</param>
     /// <param name="cancellation">Токен отмены операции.</param>
     /// <returns>Модель объявления.</returns>
-    Task<PostInfoDto> AddPost(CreatePostDto dto, CancellationToken cancellation);
+    Task<AdvertInfoDto> AddAdvert(CreateAdvertDto dto, CancellationToken cancellation);
 }

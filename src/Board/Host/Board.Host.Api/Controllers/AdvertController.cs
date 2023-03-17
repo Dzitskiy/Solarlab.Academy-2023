@@ -1,6 +1,6 @@
-﻿using Board.Application.AppData.Contexts.Posts.Services;
+﻿using Board.Application.AppData.Contexts.Adverts.Services;
 using Board.Contracts;
-using Board.Contracts.Posts;
+using Board.Contracts.Advert;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -18,17 +18,17 @@ namespace Board.Host.Api.Controllers;
 public class AdvertController : ControllerBase
 {
     private readonly ILogger<AdvertController> _logger;
-    private readonly IPostService _postService;
+    private readonly IAdvertService _advertService;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="AdvertController"/>
     /// </summary>
     /// <param name="logger">Сервис логирования.</param>
-    /// <param name="postService">Сервис для работы с объявлениями.</param>
-    public AdvertController(ILogger<AdvertController> logger, IPostService postService)
+    /// <param name="advertService">Сервис для работы с объявлениями.</param>
+    public AdvertController(ILogger<AdvertController> logger, IAdvertService advertService)
     {
         _logger = logger;
-        _postService = postService;
+        _advertService = advertService;
     }
 
     /// <summary>
@@ -38,12 +38,12 @@ public class AdvertController : ControllerBase
     /// <response code="200">Запрос выполнен успешно</response>
     /// <returns>Список моделей объявлений.</returns>
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<PostShortInfoDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<AdvertShortInfoDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Запрос объявлений");
         
-        return await Task.Run(() => Ok(Enumerable.Empty<PostShortInfoDto>()), cancellationToken);
+        return await Task.Run(() => Ok(Enumerable.Empty<AdvertShortInfoDto>()), cancellationToken);
     }
 
     /// <summary>
@@ -55,11 +55,11 @@ public class AdvertController : ControllerBase
     /// <response code="404">Объявление с указанным идентификатором не найдено.</response>
     /// <returns>Модель объявления.</returns>
     [HttpGet("{id:Guid}")]
-    [ProducesResponseType(typeof(PostInfoDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(AdvertInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => Ok(new PostInfoDto()), cancellationToken);
+        return await Task.Run(() => Ok(new AdvertInfoDto()), cancellationToken);
     }
 
     /// <summary>
@@ -72,14 +72,14 @@ public class AdvertController : ControllerBase
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
     /// <returns>Модель созданного объявления.</returns>
     [HttpPost]
-    [ProducesResponseType(typeof(PostInfoDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(AdvertInfoDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create([FromBody] CreatePostDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateAdvertDto dto, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"{JsonConvert.SerializeObject(dto)}");
 
-        var result = await _postService.AddPost(dto, cancellationToken);
+        var result = await _advertService.AddAdvert(dto, cancellationToken);
         
         return await Task.Run(() => CreatedAtAction(nameof(GetById), new { result.Id }), cancellationToken);
     }
@@ -97,14 +97,14 @@ public class AdvertController : ControllerBase
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
     /// <returns>Модель обновлённого объявления.</returns>
     [HttpPut("{id:Guid}")]
-    [ProducesResponseType(typeof(PostInfoDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(AdvertInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdatePostDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateAdvertDto dto, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => Ok(new PostInfoDto()), cancellationToken);
+        return await Task.Run(() => Ok(new AdvertInfoDto()), cancellationToken);
     }
 
     /// <summary>
@@ -120,15 +120,15 @@ public class AdvertController : ControllerBase
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
     /// <returns>Модель обновлённого объявления.</returns>
     [HttpPatch("{id:Guid}")]
-    [ProducesResponseType(typeof(PostInfoDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(AdvertInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<UpdatePostDto> dto,
+    public async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<UpdateAdvertDto> dto,
         CancellationToken cancellationToken)
     {
-        return await Task.Run(() => Ok(new PostInfoDto()), cancellationToken);
+        return await Task.Run(() => Ok(new AdvertInfoDto()), cancellationToken);
     }
 
     /// <summary>

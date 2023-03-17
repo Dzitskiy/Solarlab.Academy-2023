@@ -1,9 +1,9 @@
-﻿namespace Board.Contracts.Posts
+﻿namespace Board.Contracts.Advert
 {
     /// <summary>
     /// Модель обновления объявления.
     /// </summary>
-    public class UpdatePostDto : CreatePostDto
+    public class UpdateAdvertDto : CreateAdvertDto
     {
     }
 }
