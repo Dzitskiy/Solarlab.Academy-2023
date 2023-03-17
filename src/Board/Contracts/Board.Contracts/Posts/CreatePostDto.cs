@@ -26,7 +26,7 @@ public class CreatePostDto
     /// <summary>
     /// Идентификатор категории.
     /// </summary>
-    public Guid CateroryId { get; set; }
+    public Guid CategoryId { get; set; }
 
     /// <summary>
     /// Теги.

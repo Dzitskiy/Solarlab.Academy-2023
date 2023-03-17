@@ -8,11 +8,6 @@
         /// <summary>
         /// Токен авторизации.
         /// </summary>
-        public string JWTToken { get; set; }
-
-        /// <summary>
-        /// Идентификатор пользователя.
-        /// </summary>
-        public Guid? UserId { get; set; }
+        public string Token { get; set; }
     }
 }

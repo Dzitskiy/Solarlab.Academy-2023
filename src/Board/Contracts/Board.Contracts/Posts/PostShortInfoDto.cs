@@ -16,11 +16,6 @@
         public string Name { get; set; }
         
         /// <summary>
-        /// Дата/время создания (UTC).
-        /// </summary>
-        public DateTime CreatedAt { get; set; }
-        
-        /// <summary>
         /// Признак актуальности.
         /// </summary>
         public bool IsActive { get; set; }

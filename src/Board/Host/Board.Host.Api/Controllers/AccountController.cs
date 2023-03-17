@@ -40,6 +40,8 @@ public class AccountController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> RegisterAccount([FromBody] CreateAccountDto dto, CancellationToken cancellation)
     {
+        _logger.LogInformation("Регистрация нового аккаунта.");
+
         return await Task.Run(() => CreatedAtAction(nameof(Login), Guid.Empty), cancellation);
     }
 
@@ -50,14 +52,18 @@ public class AccountController : ControllerBase
     /// <param name="cancellation">Токен отмены.</param>
     /// <response code="200">Запрос выполнен успешно</response>
     /// <response code="400">Модель данных запроса невалидна.</response>
-    /// <response code="422">Произошёл конфликт бизнес-логики.</response>
+    /// <response code="403">Доступ запрещён (пользователь заблокирован).</response>
+    /// <response code="404">Пользователь не найден.</response>
     /// <returns>Модель с данными входа.</returns>
     [HttpPost("login")]
     [ProducesResponseType(typeof(LoginResultDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Login([FromBody] LoginAccountDto dto, CancellationToken cancellation)
     {
+        _logger.LogInformation("Вход в аккаунт.");
+
         return await Task.Run(() => Ok(new LoginAccountDto()), cancellation);
     }
 }

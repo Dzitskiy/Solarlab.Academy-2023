@@ -24,44 +24,9 @@ namespace Board.Contracts.Account
         public string Password { get; set; }
 
         /// <summary>
-        /// Фамилия.
-        /// </summary>
-        [Required(ErrorMessage = "Фамилия не указана")]
-        [StringLength(32, MinimumLength = 2)]
-        [ForbiddenWordsValidation]
-        public string LastName { get; set; }
-
-        /// <summary>
-        /// Имя.
-        /// </summary>
-        [Required(ErrorMessage = "Имя не указано")]
-        [StringLength(32, MinimumLength = 2)]
-        [ForbiddenWordsValidation]
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// Отчество.
-        /// </summary>
-        [Required(ErrorMessage = "Отчество не указано")]
-        [StringLength(32, MinimumLength = 2)]
-        [ForbiddenWordsValidation]
-        public string MiddleName { get; set; }
-
-        /// <summary>
         /// Электронный адрес.
         /// </summary>
-        [Required(ErrorMessage = "Электронный адрес не указан")]
         [RegularExpression(@"^.+\@.+\..+$")]
         public string Email { get; set; }
-
-        /// <summary>
-        /// Номер телефона.
-        /// </summary>
-        public string PhoneNumber { get; set; }
-
-        /// <summary>
-        /// Дата рождения пользователя.
-        /// </summary>
-        public DateTime? Birthday { get; set; }
     }
 }

@@ -15,17 +15,17 @@ namespace Board.Host.Api.Controllers;
 [Route("[controller]")]
 [Produces("application/json")]
 [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
-public class PostController : ControllerBase
+public class AdvertController : ControllerBase
 {
-    private readonly ILogger<PostController> _logger;
+    private readonly ILogger<AdvertController> _logger;
     private readonly IPostService _postService;
 
     /// <summary>
-    /// Инициализирует экземпляр <see cref="PostController"/>
+    /// Инициализирует экземпляр <see cref="AdvertController"/>
     /// </summary>
     /// <param name="logger">Сервис логирования.</param>
     /// <param name="postService">Сервис для работы с объявлениями.</param>
-    public PostController(ILogger<PostController> logger, IPostService postService)
+    public AdvertController(ILogger<AdvertController> logger, IPostService postService)
     {
         _logger = logger;
         _postService = postService;
@@ -42,7 +42,7 @@ public class PostController : ControllerBase
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Запрос объявлений");
-
+        
         return await Task.Run(() => Ok(Enumerable.Empty<PostShortInfoDto>()), cancellationToken);
     }
 
@@ -75,13 +75,13 @@ public class PostController : ControllerBase
     [ProducesResponseType(typeof(PostInfoDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> CreatePost([FromBody] CreatePostDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreatePostDto dto, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"{JsonConvert.SerializeObject(dto)}");
 
         var result = await _postService.AddPost(dto, cancellationToken);
         
-        return await Task.Run(() => CreatedAtAction(nameof(GetById), new { result.Id }, result), cancellationToken);
+        return await Task.Run(() => CreatedAtAction(nameof(GetById), new { result.Id }), cancellationToken);
     }
 
     /// <summary>
@@ -92,13 +92,17 @@ public class PostController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <response code="200">Запрос выполнен успешно.</response>
     /// <response code="400">Модель данных запроса невалидна.</response>
+    /// <response code="403">Доступ запрещён.</response>
+    /// <response code="404">Объявление с указанным идентификатором не найдено.</response>
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
     /// <returns>Модель обновлённого объявления.</returns>
     [HttpPut("{id:Guid}")]
     [ProducesResponseType(typeof(PostInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdatePost(Guid id, [FromBody] UpdatePostDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdatePostDto dto, CancellationToken cancellationToken)
     {
         return await Task.Run(() => Ok(new PostInfoDto()), cancellationToken);
     }
@@ -111,13 +115,17 @@ public class PostController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <response code="200">Запрос выполнен успешно.</response>
     /// <response code="400">Модель данных запроса невалидна.</response>
+    /// <response code="403">Доступ запрещён.</response>
+    /// <response code="404">Объявление с указанным идентификатором не найдено.</response>
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
     /// <returns>Модель обновлённого объявления.</returns>
     [HttpPatch("{id:Guid}")]
     [ProducesResponseType(typeof(PostInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> PatchPost(Guid id, [FromBody] JsonPatchDocument<UpdatePostDto> dto,
+    public async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<UpdatePostDto> dto,
         CancellationToken cancellationToken)
     {
         return await Task.Run(() => Ok(new PostInfoDto()), cancellationToken);
@@ -129,8 +137,10 @@ public class PostController : ControllerBase
     /// <param name="id">Идентификатор.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <response code="204">Запрос выполнен успешно.</response>
+    /// <response code="403">Доступ запрещён.</response>
     [HttpDelete("{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
     {
         return await Task.Run(NoContent, cancellationToken);

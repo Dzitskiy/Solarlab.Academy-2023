@@ -21,6 +21,11 @@
         public string Description { get; set; }
 
         /// <summary>
+        /// Идентификатор категории.
+        /// </summary>
+        public Guid CategoryId { get; set; }
+
+        /// <summary>
         /// Признак актуальности.
         /// </summary>
         public bool IsActive { get; set; }

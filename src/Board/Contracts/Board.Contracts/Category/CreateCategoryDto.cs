@@ -24,6 +24,6 @@ namespace Board.Contracts.Category
         /// <summary>
         /// Признак актуальности.
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

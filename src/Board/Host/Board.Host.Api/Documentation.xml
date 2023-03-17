@@ -35,8 +35,88 @@
             <param name="cancellation">Токен отмены.</param>
             <response code="200">Запрос выполнен успешно</response>
             <response code="400">Модель данных запроса невалидна.</response>
-            <response code="422">Произошёл конфликт бизнес-логики.</response>
+            <response code="403">Доступ запрещён (пользователь заблокирован).</response>
+            <response code="404">Пользователь не найден.</response>
             <returns>Модель с данными входа.</returns>
+        </member>
+        <member name="T:Board.Host.Api.Controllers.AdvertController">
+            <summary>
+            Контроллер для работы с объявлениями.
+            </summary>
+            <response code="500">Произошла внутренняя ошибка.</response>
+        </member>
+        <member name="M:Board.Host.Api.Controllers.AdvertController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.AdvertController},Board.Application.AppData.Contexts.Posts.Services.IPostService)">
+            <summary>
+            Инициализирует экземпляр <see cref="T:Board.Host.Api.Controllers.AdvertController"/>
+            </summary>
+            <param name="logger">Сервис логирования.</param>
+            <param name="postService">Сервис для работы с объявлениями.</param>
+        </member>
+        <member name="M:Board.Host.Api.Controllers.AdvertController.GetAll(System.Threading.CancellationToken)">
+            <summary>
+            Получить список объявлений.
+            </summary>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="200">Запрос выполнен успешно</response>
+            <returns>Список моделей объявлений.</returns>
+        </member>
+        <member name="M:Board.Host.Api.Controllers.AdvertController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Получить объявление по идентификатору.
+            </summary>
+            <param name="id">Идентификатор.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="200">Запрос выполнен успешно.</response>
+            <response code="404">Объявление с указанным идентификатором не найдено.</response>
+            <returns>Модель объявления.</returns>
+        </member>
+        <member name="M:Board.Host.Api.Controllers.AdvertController.Create(Board.Contracts.Posts.CreatePostDto,System.Threading.CancellationToken)">
+            <summary>
+            Создать новое объявление.
+            </summary>
+            <param name="dto">Модель создания объявления.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="201">Объявление успешно создано.</response>
+            <response code="400">Модель данных запроса невалидна.</response>
+            <response code="422">Произошёл конфликт бизнес-логики.</response>
+            <returns>Модель созданного объявления.</returns>
+        </member>
+        <member name="M:Board.Host.Api.Controllers.AdvertController.Update(System.Guid,Board.Contracts.Posts.UpdatePostDto,System.Threading.CancellationToken)">
+            <summary>
+            Обновить объявление.
+            </summary>
+            <param name="id">Идентификатор.</param>
+            <param name="dto">Модель обновления объявления.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="200">Запрос выполнен успешно.</response>
+            <response code="400">Модель данных запроса невалидна.</response>
+            <response code="403">Доступ запрещён.</response>
+            <response code="404">Объявление с указанным идентификатором не найдено.</response>
+            <response code="422">Произошёл конфликт бизнес-логики.</response>
+            <returns>Модель обновлённого объявления.</returns>
+        </member>
+        <member name="M:Board.Host.Api.Controllers.AdvertController.Patch(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Board.Contracts.Posts.UpdatePostDto},System.Threading.CancellationToken)">
+            <summary>
+            Частично обновить объявление.
+            </summary>
+            <param name="id">Идентификатор.</param>
+            <param name="dto">Модель обновления объявления.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="200">Запрос выполнен успешно.</response>
+            <response code="400">Модель данных запроса невалидна.</response>
+            <response code="403">Доступ запрещён.</response>
+            <response code="404">Объявление с указанным идентификатором не найдено.</response>
+            <response code="422">Произошёл конфликт бизнес-логики.</response>
+            <returns>Модель обновлённого объявления.</returns>
+        </member>
+        <member name="M:Board.Host.Api.Controllers.AdvertController.DeleteById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Удалить объявление по идентификатору.
+            </summary>
+            <param name="id">Идентификатор.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="204">Запрос выполнен успешно.</response>
+            <response code="403">Доступ запрещён.</response>
         </member>
         <member name="T:Board.Host.Api.Controllers.CategoryController">
             <summary>
@@ -68,7 +148,7 @@
             <response code="404">Категория с указанным идентификатором не найдена.</response>
             <returns>Модель категории.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.CategoryController.CreateCategory(Board.Contracts.Category.CreateCategoryDto,System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.CategoryController.Create(Board.Contracts.Category.CreateCategoryDto,System.Threading.CancellationToken)">
             <summary>
             Создать новую категорию.
             </summary>
@@ -79,7 +159,7 @@
             <response code="422">Произошёл конфликт бизнес-логики.</response>
             <returns>Модель созданной категории.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.CategoryController.UpdateCategory(System.Guid,Board.Contracts.Category.UpdateCategoryDto,System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.CategoryController.Update(System.Guid,Board.Contracts.Category.UpdateCategoryDto,System.Threading.CancellationToken)">
             <summary>
             Обновить категорию.
             </summary>
@@ -88,10 +168,12 @@
             <param name="cancellationToken">Токен отмены.</param>
             <response code="200">Запрос выполнен успешно.</response>
             <response code="400">Модель данных запроса невалидна.</response>
+            <response code="403">Доступ запрещён.</response>
+            <response code="404">Объявление с указанным идентификатором не найдено.</response>
             <response code="422">Произошёл конфликт бизнес-логики.</response>
             <returns>Модель обновлённой категории.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.CategoryController.PatchCategory(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Board.Contracts.Category.UpdateCategoryDto},System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.CategoryController.Patch(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Board.Contracts.Category.UpdateCategoryDto},System.Threading.CancellationToken)">
             <summary>
             Частично обновить категорию.
             </summary>
@@ -100,6 +182,8 @@
             <param name="cancellationToken">Токен отмены.</param>
             <response code="200">Запрос выполнен успешно.</response>
             <response code="400">Модель данных запроса невалидна.</response>
+            <response code="403">Доступ запрещён.</response>
+            <response code="404">Объявление с указанным идентификатором не найдено.</response>
             <response code="422">Произошёл конфликт бизнес-логики.</response>
             <returns>Модель обновлённой категории.</returns>
         </member>
@@ -110,80 +194,57 @@
             <param name="id">Идентификатор.</param>
             <param name="cancellationToken">Токен отмены.</param>
             <response code="204">Запрос выполнен успешно.</response>
+            <response code="403">Доступ запрещён.</response>
         </member>
-        <member name="T:Board.Host.Api.Controllers.PostController">
+        <member name="T:Board.Host.Api.Controllers.FileController">
             <summary>
-            Контроллер для работы с объявлениями.
+            Контроллер для работы с файлами.
             </summary>
             <response code="500">Произошла внутренняя ошибка.</response>
         </member>
-        <member name="M:Board.Host.Api.Controllers.PostController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.PostController},Board.Application.AppData.Contexts.Posts.Services.IPostService)">
+        <member name="M:Board.Host.Api.Controllers.FileController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.FileController})">
             <summary>
-            Инициализирует экземпляр <see cref="T:Board.Host.Api.Controllers.PostController"/>
+            Инициализирует экземпляр <see cref="T:Board.Host.Api.Controllers.FileController"/>
             </summary>
             <param name="logger">Сервис логирования.</param>
-            <param name="postService">Сервис для работы с объявлениями.</param>
         </member>
-        <member name="M:Board.Host.Api.Controllers.PostController.GetAll(System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.FileController.GetInfoById(System.String,System.Threading.CancellationToken)">
             <summary>
-            Получить список объявлений.
+            Получение информации о файле по идентификатору.
             </summary>
-            <param name="cancellationToken">Токен отмены.</param>
-            <response code="200">Запрос выполнен успешно</response>
-            <returns>Список моделей объявлений.</returns>
-        </member>
-        <member name="M:Board.Host.Api.Controllers.PostController.GetById(System.Guid,System.Threading.CancellationToken)">
-            <summary>
-            Получить объявление по идентификатору.
-            </summary>
-            <param name="id">Идентификатор.</param>
+            <param name="id">Идентификатор файла.</param>
             <param name="cancellationToken">Токен отмены.</param>
             <response code="200">Запрос выполнен успешно.</response>
-            <response code="404">Объявление с указанным идентификатором не найдено.</response>
-            <returns>Модель объявления.</returns>
+            <response code="404">Файл с указанным идентификатором не найден.</response>
+            <returns>Информация о файле.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.PostController.CreatePost(Board.Contracts.Posts.CreatePostDto,System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.FileController.Upload(Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
             <summary>
-            Создать новое объявление.
+            Загрузка файла в систему.
             </summary>
-            <param name="dto">Модель создания объявления.</param>
+            <param name="file">Файл.</param>
             <param name="cancellationToken">Токен отмены.</param>
-            <response code="201">Объявление успешно создано.</response>
+            <response code="201">Файл успешно загружен.</response>
             <response code="400">Модель данных запроса невалидна.</response>
-            <response code="422">Произошёл конфликт бизнес-логики.</response>
-            <returns>Модель созданного объявления.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.PostController.UpdatePost(System.Guid,Board.Contracts.Posts.UpdatePostDto,System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.FileController.Download(System.String,System.Threading.CancellationToken)">
             <summary>
-            Обновить объявление.
+            Скачивание файла по идентификатору.
             </summary>
-            <param name="id">Идентификатор.</param>
-            <param name="dto">Модель обновления объявления.</param>
+            <param name="id">Идентификатор файла.</param>
             <param name="cancellationToken">Токен отмены.</param>
             <response code="200">Запрос выполнен успешно.</response>
-            <response code="400">Модель данных запроса невалидна.</response>
-            <response code="422">Произошёл конфликт бизнес-логики.</response>
-            <returns>Модель обновлённого объявления.</returns>
+            <response code="404">Файл с указанным идентификатором не найден.</response>
+            <returns>Файл в виде потока.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.PostController.PatchPost(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Board.Contracts.Posts.UpdatePostDto},System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.FileController.Delete(System.String,System.Threading.CancellationToken)">
             <summary>
-            Частично обновить объявление.
+            Удаление файла по идентификатору.
             </summary>
-            <param name="id">Идентификатор.</param>
-            <param name="dto">Модель обновления объявления.</param>
+            <param name="id">Идентификатор файла.</param>
             <param name="cancellationToken">Токен отмены.</param>
-            <response code="200">Запрос выполнен успешно.</response>
-            <response code="400">Модель данных запроса невалидна.</response>
-            <response code="422">Произошёл конфликт бизнес-логики.</response>
-            <returns>Модель обновлённого объявления.</returns>
-        </member>
-        <member name="M:Board.Host.Api.Controllers.PostController.DeleteById(System.Guid,System.Threading.CancellationToken)">
-            <summary>
-            Удалить объявление по идентификатору.
-            </summary>
-            <param name="id">Идентификатор.</param>
-            <param name="cancellationToken">Токен отмены.</param>
-            <response code="204">Запрос выполнен успешно.</response>
+            <response code="403">Доступ запрещён.</response>
+            <response code="404">Файл с указанным идентификатором не найден.</response>
         </member>
     </members>
 </doc>

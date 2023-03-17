@@ -70,9 +70,9 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(typeof(CategoryInfoDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => CreatedAtAction(nameof(GetById), new { Guid.Empty }, new CategoryInfoDto()), cancellationToken);
+        return await Task.Run(() => CreatedAtAction(nameof(GetById), new { Guid.Empty }), cancellationToken);
     }
 
     /// <summary>
@@ -83,13 +83,17 @@ public class CategoryController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <response code="200">Запрос выполнен успешно.</response>
     /// <response code="400">Модель данных запроса невалидна.</response>
+    /// <response code="403">Доступ запрещён.</response>
+    /// <response code="404">Объявление с указанным идентификатором не найдено.</response>
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
     /// <returns>Модель обновлённой категории.</returns>
     [HttpPut("{id:Guid}")]
     [ProducesResponseType(typeof(CategoryInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] UpdateCategoryDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCategoryDto dto, CancellationToken cancellationToken)
     {
         return await Task.Run(() => Ok(new CategoryInfoDto()), cancellationToken);
     }
@@ -102,13 +106,17 @@ public class CategoryController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <response code="200">Запрос выполнен успешно.</response>
     /// <response code="400">Модель данных запроса невалидна.</response>
+    /// <response code="403">Доступ запрещён.</response>
+    /// <response code="404">Объявление с указанным идентификатором не найдено.</response>
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
     /// <returns>Модель обновлённой категории.</returns>
     [HttpPatch("{id:Guid}")]
     [ProducesResponseType(typeof(CategoryInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> PatchCategory(Guid id, [FromBody] JsonPatchDocument<UpdateCategoryDto> dto,
+    public async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<UpdateCategoryDto> dto,
         CancellationToken cancellationToken)
     {
         return await Task.Run(() => Ok(new CategoryInfoDto()), cancellationToken);
@@ -120,8 +128,10 @@ public class CategoryController : ControllerBase
     /// <param name="id">Идентификатор.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <response code="204">Запрос выполнен успешно.</response>
+    /// <response code="403">Доступ запрещён.</response>
     [HttpDelete("{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
     {
         return await Task.Run(NoContent, cancellationToken);
