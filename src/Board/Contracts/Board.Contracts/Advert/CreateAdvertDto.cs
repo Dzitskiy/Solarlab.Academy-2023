@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Board.Contracts.Attributes;
 
-namespace Board.Contracts.Posts;
+namespace Board.Contracts.Advert;
 
 /// <summary>
 /// Модель создания объявления.
 /// </summary>
-public class CreatePostDto
+public class CreateAdvertDto
 {
     /// <summary>
     /// Наименование.

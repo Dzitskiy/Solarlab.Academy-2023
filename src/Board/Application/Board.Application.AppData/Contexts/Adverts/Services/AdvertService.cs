@@ -1,25 +1,25 @@
-﻿using Board.Contracts.Posts;
+﻿using Board.Contracts.Advert;
 
-namespace Board.Application.AppData.Contexts.Posts.Services;
+namespace Board.Application.AppData.Contexts.Adverts.Services;
 
 /// <inheritdoc />
-public class PostService : IPostService
+public class AdvertService : IAdvertService
 {
     /// <inheritdoc />
-    public async Task<PostInfoDto> AddPost(CreatePostDto dto, CancellationToken cancellation)
+    public async Task<AdvertInfoDto> AddAdvert(CreateAdvertDto dto, CancellationToken cancellation)
     {
         if (IsValid(dto))
         {
             // Вызов репозитория для сохранения в БД.
             
             // возврат результата.
-            return await Task.Run(() => new PostInfoDto(), cancellation);
+            return await Task.Run(() => new AdvertInfoDto(), cancellation);
         }
 
         return null;
     }
 
-    private bool IsValid(CreatePostDto dto)
+    private bool IsValid(CreateAdvertDto dto)
     {
         // логика валидации...
         

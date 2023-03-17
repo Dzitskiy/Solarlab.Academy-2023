@@ -1,9 +1,9 @@
-﻿namespace Board.Contracts.Posts
+﻿namespace Board.Contracts.Advert
 {
     /// <summary>
     /// Информация об объявлении.
     /// </summary>
-    public class PostInfoDto
+    public class AdvertInfoDto
     {
         /// <summary>
         /// Идентификатор.

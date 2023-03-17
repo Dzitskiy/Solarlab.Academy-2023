@@ -45,12 +45,12 @@
             </summary>
             <response code="500">Произошла внутренняя ошибка.</response>
         </member>
-        <member name="M:Board.Host.Api.Controllers.AdvertController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.AdvertController},Board.Application.AppData.Contexts.Posts.Services.IPostService)">
+        <member name="M:Board.Host.Api.Controllers.AdvertController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.AdvertController},Board.Application.AppData.Contexts.Adverts.Services.IAdvertService)">
             <summary>
             Инициализирует экземпляр <see cref="T:Board.Host.Api.Controllers.AdvertController"/>
             </summary>
             <param name="logger">Сервис логирования.</param>
-            <param name="postService">Сервис для работы с объявлениями.</param>
+            <param name="advertService">Сервис для работы с объявлениями.</param>
         </member>
         <member name="M:Board.Host.Api.Controllers.AdvertController.GetAll(System.Threading.CancellationToken)">
             <summary>
@@ -70,7 +70,7 @@
             <response code="404">Объявление с указанным идентификатором не найдено.</response>
             <returns>Модель объявления.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.AdvertController.Create(Board.Contracts.Posts.CreatePostDto,System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.AdvertController.Create(Board.Contracts.Advert.CreateAdvertDto,System.Threading.CancellationToken)">
             <summary>
             Создать новое объявление.
             </summary>
@@ -81,7 +81,7 @@
             <response code="422">Произошёл конфликт бизнес-логики.</response>
             <returns>Модель созданного объявления.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.AdvertController.Update(System.Guid,Board.Contracts.Posts.UpdatePostDto,System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.AdvertController.Update(System.Guid,Board.Contracts.Advert.UpdateAdvertDto,System.Threading.CancellationToken)">
             <summary>
             Обновить объявление.
             </summary>
@@ -95,7 +95,7 @@
             <response code="422">Произошёл конфликт бизнес-логики.</response>
             <returns>Модель обновлённого объявления.</returns>
         </member>
-        <member name="M:Board.Host.Api.Controllers.AdvertController.Patch(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Board.Contracts.Posts.UpdatePostDto},System.Threading.CancellationToken)">
+        <member name="M:Board.Host.Api.Controllers.AdvertController.Patch(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Board.Contracts.Advert.UpdateAdvertDto},System.Threading.CancellationToken)">
             <summary>
             Частично обновить объявление.
             </summary>
