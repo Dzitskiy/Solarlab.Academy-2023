@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Board.Contracts.Attributes;
 
-namespace Board.Contracts.Posts;
+namespace Board.Contracts.Advert;
 
 /// <summary>
 /// Модель создания объявления.
 /// </summary>
-public class CreatePostDto
+public class CreateAdvertDto
 {
     /// <summary>
     /// Наименование.
@@ -22,14 +22,15 @@ public class CreatePostDto
     [StringLength(100, ErrorMessage = "Описание либо слишком короткое, либо слишком длинное", MinimumLength = 10)]
     [ForbiddenWordsValidation]
     public string Description { get; set; }
-    
-    [MinLength(1, ErrorMessage = "Объявление должно иметь хотя бы 1 тэг")]
-    [MaxLength(10, ErrorMessage = "Объявление содержит слишком много тегов")]
-    public int[] Tags { get; set; }
-    
+
     /// <summary>
-    /// Дата создания.
+    /// Идентификатор категории.
     /// </summary>
-    [ActualDateTimeValidation(false, "2000-01-01")]
-    public DateTime CreationDate { get; set; }
+    public Guid CategoryId { get; set; }
+
+    /// <summary>
+    /// Теги.
+    /// </summary>
+    [MaxLength(10, ErrorMessage = "Объявление содержит слишком много тегов")]
+    public string[] Tags { get; set; }
 }

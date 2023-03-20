@@ -19,6 +19,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Application\Board.Application.AppData\Board.Application.AppData.csproj" />
       <ProjectReference Include="..\..\Contracts\Board.Contracts\Board.Contracts.csproj" />
+      <ProjectReference Include="..\..\Infrastucture\Board.Infrastucture.DataAccess\Board.Infrastucture.DataAccess.csproj" />
+      <ProjectReference Include="..\..\Infrastucture\Board.Infrastucture\Board.Infrastucture.csproj" />
     </ItemGroup>
 
     <ItemGroup>
