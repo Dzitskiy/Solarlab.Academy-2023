@@ -13,7 +13,7 @@
         /// <summary>
         /// Идентификатор родительской категории.
         /// </summary>
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Наименование.

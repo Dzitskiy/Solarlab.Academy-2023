@@ -25,24 +25,28 @@ public interface IRepository<TEntity> where TEntity: class
     /// Возвращает элемент <see cref="TEntity"/> по идентификатору.
     /// </summary>
     /// <param name="id">Идентификатор <see cref="TEntity"/>.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns><see cref="TEntity"/>.</returns>
-    Task<TEntity> GetByIdAsync(Guid id);
+    Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Добавляет элемент <see cref="TEntity"/>.
     /// </summary>
     /// <param name="model">Новая сущность <see cref="TEntity"/>.</param>
-    Task AddAsync(TEntity model);
-        
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task AddAsync(TEntity model, CancellationToken cancellationToken);
+
     /// <summary>
     /// Обновляет элемент <see cref="TEntity"/>.
     /// </summary>
     /// <param name="model">Существующая сущность <see cref="TEntity"/>.</param>
-    Task UpdateAsync(TEntity model);
-        
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task UpdateAsync(TEntity model, CancellationToken cancellationToken);
+
     /// <summary>
     /// Удаляет элемент <see cref="TEntity"/>.
     /// </summary>
     /// <param name="model">Существующая сущность <see cref="TEntity"/>.</param>
-    Task DeleteAsync(TEntity model);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task DeleteAsync(TEntity model, CancellationToken cancellationToken);
 }
