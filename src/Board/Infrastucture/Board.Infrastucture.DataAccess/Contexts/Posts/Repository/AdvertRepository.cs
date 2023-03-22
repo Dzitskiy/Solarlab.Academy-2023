@@ -1,6 +1,6 @@
 ﻿using Board.Application.AppData.Contexts.Adverts.Repositories;
 using Board.Contracts.Advert;
-using Board.Domain.Advert;
+using Board.Domain.Adverts;
 using Board.Infrastucture.Repository;
 
 namespace Board.Infrastucture.DataAccess.Contexts.Posts.Repository;
