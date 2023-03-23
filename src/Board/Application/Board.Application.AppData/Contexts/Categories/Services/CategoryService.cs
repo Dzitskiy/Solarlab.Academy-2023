@@ -1,4 +1,5 @@
-﻿using Board.Application.AppData.Contexts.Categories.Repositories;
+﻿using AutoMapper;
+using Board.Application.AppData.Contexts.Categories.Repositories;
 using Board.Contracts.Category;
 using Board.Domain.Categories;
 using System.Xml.Linq;
@@ -9,23 +10,18 @@ namespace Board.Application.AppData.Contexts.Categories.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
         /// <inheritdoc/>
         public Task<Guid> CreateAsync(CreateCategoryDto model, CancellationToken cancellationToken)
         {
-            var entity = new Category
-            {
-                Name = model.Name,
-                ParentId= model.ParentId,
-                IsActive= model.IsActive,
-                Created = DateTime.UtcNow
-            };
-
+            var entity = _mapper.Map<CreateCategoryDto, Category>(model);
             return _categoryRepository.AddAsync(entity, cancellationToken);
         }
 
@@ -45,18 +41,9 @@ namespace Board.Application.AppData.Contexts.Categories.Services
         }
 
         /// <inheritdoc/>
-        public async Task<CategoryInfoDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public Task<CategoryInfoDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await _categoryRepository.GetByIdAsync(id, cancellationToken);
-            var result = new CategoryInfoDto
-            {
-                Id= entity.Id,
-                Name= entity.Name,
-                ParentId= entity.ParentId,
-                IsActive= entity.IsActive,
-                CreatedAt = entity.Created
-            };
-            return result;
+            return _categoryRepository.GetByIdAsync(id, cancellationToken);
         }
     }
 }

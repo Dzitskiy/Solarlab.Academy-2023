@@ -22,7 +22,7 @@ namespace Board.Application.AppData.Contexts.Categories.Repositories
         /// <param name="id">Идентификатор категории.</param>
         /// <param name="cancellationToken">Токен отмены.</param>
         /// <returns>Информация о категории.</returns>
-        Task<Category> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<CategoryInfoDto> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Получение списка активных категорий.

@@ -1,4 +1,7 @@
-﻿using Board.Application.AppData.Contexts.Categories.Repositories;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Board.Application.AppData.Contexts.Categories.Repositories;
+using Board.Contracts.Category;
 using Board.Infrastucture.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +11,12 @@ namespace Board.Infrastucture.DataAccess.Contexts.Category.Repository
     public class CategoryRepository : ICategoryRepository
     {
         private readonly IRepository<Domain.Categories.Category> _repository;
+        private readonly IMapper _mapper;
 
-        public CategoryRepository(IRepository<Domain.Categories.Category> repository)
+        public CategoryRepository(IRepository<Domain.Categories.Category> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         /// <inheritdoc/>
@@ -28,9 +33,11 @@ namespace Board.Infrastucture.DataAccess.Contexts.Category.Repository
         }
 
         /// <inheritdoc/>
-        public Task<Domain.Categories.Category> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public Task<CategoryInfoDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return _repository.GetByIdAsync(id, cancellationToken);
+            return _repository.GetAll().Where(s => s.Id == id)
+                              .ProjectTo<CategoryInfoDto>(_mapper.ConfigurationProvider)
+                              .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }
