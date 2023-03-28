@@ -7,10 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Contexts\Comments" />
-      <Folder Include="Contexts\Favorites" />
-      <Folder Include="Contexts\Users\Repositories" />
-      <Folder Include="Contexts\Users\Services" />
+      <Compile Remove="Contexts\Comments\**" />
+      <Compile Remove="Contexts\Favorites\**" />
+      <Compile Remove="Contexts\Users\**" />
+      <EmbeddedResource Remove="Contexts\Comments\**" />
+      <EmbeddedResource Remove="Contexts\Favorites\**" />
+      <EmbeddedResource Remove="Contexts\Users\**" />
+      <None Remove="Contexts\Comments\**" />
+      <None Remove="Contexts\Favorites\**" />
+      <None Remove="Contexts\Users\**" />
     </ItemGroup>
 
     <ItemGroup>
