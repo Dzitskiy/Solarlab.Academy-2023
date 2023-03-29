@@ -6,7 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Contexts\Users\Repositories" />
+      <Compile Remove="Contexts\Users\**" />
+      <EmbeddedResource Remove="Contexts\Users\**" />
+      <None Remove="Contexts\Users\**" />
     </ItemGroup>
 
     <ItemGroup>
