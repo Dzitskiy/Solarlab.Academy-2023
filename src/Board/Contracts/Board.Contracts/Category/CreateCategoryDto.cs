@@ -19,7 +19,7 @@ namespace Board.Contracts.Category
         /// <summary>
         /// Идентификатор родительской категории.
         /// </summary>
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Признак актуальности.

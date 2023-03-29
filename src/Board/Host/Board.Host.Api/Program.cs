@@ -1,12 +1,19 @@
+using AutoMapper;
+using Board.Application.AppData.Contexts.Adverts.Repositories;
 using Board.Application.AppData.Contexts.Adverts.Services;
+using Board.Application.AppData.Contexts.Categories.Repositories;
+using Board.Application.AppData.Contexts.Categories.Services;
 using Board.Application.AppData.Services;
 using Board.Contracts.Advert;
 using Board.Contracts.Interfaces;
 using Board.Infrastucture.DataAccess;
+using Board.Infrastucture.DataAccess.Contexts.Category.Repository;
+using Board.Infrastucture.DataAccess.Contexts.Posts.Repository;
 using Board.Infrastucture.DataAccess.Interfaces;
+using Board.Infrastucture.MapProfiles;
 using Board.Infrastucture.Repository;
-using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +26,17 @@ builder.Services.AddDbContext<BoardDbContext>((Action<IServiceProvider, DbContex
 
 builder.Services.AddScoped((Func<IServiceProvider, DbContext>) (sp => sp.GetRequiredService<BoardDbContext>()));
 
+// Add repositories to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IAdvertRepository, AdvertRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IAdvertService, AdvertService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IForbiddenWordsService, ForbiddenWordsService>();
+
+builder.Services.AddSingleton<IMapper>(new Mapper(GetMapperConfiguration()));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -54,3 +67,14 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static MapperConfiguration GetMapperConfiguration()
+{
+    var configuration = new MapperConfiguration(cfg => 
+    {
+        cfg.AddProfile<CategoryProfile>();
+        cfg.AddProfile<AdvertProfile>();
+    });
+    configuration.AssertConfigurationIsValid();
+    return configuration;
+}

@@ -1,10 +1,11 @@
 ﻿using Board.Application.AppData.Contexts.Adverts.Repositories;
 using Board.Contracts.Advert;
-using Board.Domain.Advert;
+using Board.Domain.Adverts;
 using Board.Infrastucture.Repository;
 
 namespace Board.Infrastucture.DataAccess.Contexts.Posts.Repository;
 
+/// <inheritdoc cref="IAdvertRepository"/>
 public class AdvertRepository : IAdvertRepository
 {
     private readonly IRepository<Advert> _advertRepository;
@@ -21,7 +22,7 @@ public class AdvertRepository : IAdvertRepository
     /// <returns></returns>
     public Task<CreateAdvertDto> AddAdvert(Advert entity)
     {
-        var result = _advertRepository.AddAsync(entity);
-        return Task.Run(() => new CreateAdvertDto());
+        //var result = _advertRepository.AddAsync(entity);
+        return Task.FromResult(new CreateAdvertDto());
     }
 }

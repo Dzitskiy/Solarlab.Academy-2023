@@ -36,25 +36,25 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
     }
 
     /// <inheritdoc />
-    public async Task<TEntity> GetByIdAsync(Guid id)
+    public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await DbSet.FindAsync(id);
+        return await DbSet.FindAsync(id, cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task AddAsync(TEntity model)
+    public async Task AddAsync(TEntity model, CancellationToken cancellationToken)
     {
         if (model == null)
         {
             throw new ArgumentNullException(nameof(model));
         }
             
-        await DbSet.AddAsync(model);
-        await DbContext.SaveChangesAsync();
+        await DbSet.AddAsync(model, cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task UpdateAsync(TEntity model)
+    public async Task UpdateAsync(TEntity model, CancellationToken cancellationToken)
     {
         if (model == null)
         {
@@ -62,11 +62,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
         }
             
         DbSet.Update(model);
-        await DbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(TEntity model)
+    public async Task DeleteAsync(TEntity model, CancellationToken cancellationToken)
     {
         if (model == null)
         {
@@ -74,6 +74,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
         }
             
         DbSet.Remove(model);
-        await DbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync(cancellationToken);
     }
 }

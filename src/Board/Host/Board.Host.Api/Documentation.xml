@@ -124,11 +124,12 @@
             </summary>
             <response code="500">Произошла внутренняя ошибка.</response>
         </member>
-        <member name="M:Board.Host.Api.Controllers.CategoryController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.CategoryController})">
+        <member name="M:Board.Host.Api.Controllers.CategoryController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.CategoryController},Board.Application.AppData.Contexts.Categories.Services.ICategoryService)">
             <summary>
             Инициализирует экземпляр <see cref="T:Board.Host.Api.Controllers.CategoryController"/>
             </summary>
             <param name="logger">Сервис логирования.</param>
+            <param name="categoryService">Сервис категорий.</param>
         </member>
         <member name="M:Board.Host.Api.Controllers.CategoryController.GetAll(System.Threading.CancellationToken)">
             <summary>
@@ -148,6 +149,15 @@
             <response code="404">Категория с указанным идентификатором не найдена.</response>
             <returns>Модель категории.</returns>
         </member>
+        <member name="M:Board.Host.Api.Controllers.CategoryController.GetActive(System.Threading.CancellationToken)">
+            <summary>
+            Получить список активных категорий.
+            </summary>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="200">Запрос выполнен успешно.</response>
+            <response code="404">Категория с указанным идентификатором не найдена.</response>
+            <returns>Модель категории.</returns>
+        </member>
         <member name="M:Board.Host.Api.Controllers.CategoryController.Create(Board.Contracts.Category.CreateCategoryDto,System.Threading.CancellationToken)">
             <summary>
             Создать новую категорию.
@@ -157,7 +167,7 @@
             <response code="201">Категория успешно создана.</response>
             <response code="400">Модель данных запроса невалидна.</response>
             <response code="422">Произошёл конфликт бизнес-логики.</response>
-            <returns>Модель созданной категории.</returns>
+            <returns>Идентификатор созданной категории.</returns>
         </member>
         <member name="M:Board.Host.Api.Controllers.CategoryController.Update(System.Guid,Board.Contracts.Category.UpdateCategoryDto,System.Threading.CancellationToken)">
             <summary>

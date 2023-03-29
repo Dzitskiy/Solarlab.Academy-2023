@@ -1,7 +1,9 @@
-﻿using Board.Contracts;
+﻿using Board.Application.AppData.Contexts.Categories.Services;
+using Board.Contracts;
 using Board.Contracts.Category;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Board.Host.Api.Controllers;
 
@@ -16,14 +18,17 @@ namespace Board.Host.Api.Controllers;
 public class CategoryController : ControllerBase
 {
     private readonly ILogger<CategoryController> _logger;
+    private readonly ICategoryService _categoryService;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="CategoryController"/>
     /// </summary>
     /// <param name="logger">Сервис логирования.</param>
-    public CategoryController(ILogger<CategoryController> logger)
+    /// <param name="categoryService">Сервис категорий.</param>
+    public CategoryController(ILogger<CategoryController> logger, ICategoryService categoryService)
     {
         _logger = logger;
+        _categoryService = categoryService;
     }
 
     /// <summary>
@@ -54,7 +59,23 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => Ok(new CategoryInfoDto()), cancellationToken);
+        var result = await _categoryService.GetByIdAsync(id, cancellationToken);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Получить список активных категорий.
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <response code="200">Запрос выполнен успешно.</response>
+    /// <response code="404">Категория с указанным идентификатором не найдена.</response>
+    /// <returns>Модель категории.</returns>
+    [HttpGet("active")]
+    [ProducesResponseType(typeof(CategoryInfoDto[]), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetActive(CancellationToken cancellationToken)
+    {
+        var result = await _categoryService.GetActiveAsync(cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
@@ -65,14 +86,15 @@ public class CategoryController : ControllerBase
     /// <response code="201">Категория успешно создана.</response>
     /// <response code="400">Модель данных запроса невалидна.</response>
     /// <response code="422">Произошёл конфликт бизнес-логики.</response>
-    /// <returns>Модель созданной категории.</returns>
+    /// <returns>Идентификатор созданной категории.</returns>
     [HttpPost]
-    [ProducesResponseType(typeof(CategoryInfoDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => CreatedAtAction(nameof(GetById), new { Guid.Empty }), cancellationToken);
+        var result = await _categoryService.CreateAsync(dto, cancellationToken);
+        return StatusCode((int)HttpStatusCode.Created, result);
     }
 
     /// <summary>

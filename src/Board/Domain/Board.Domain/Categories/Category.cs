@@ -1,9 +1,11 @@
-﻿namespace Board.Contracts.Category
+﻿using Board.Domain.Adverts;
+
+namespace Board.Domain.Categories
 {
     /// <summary>
-    /// Информация о категории.
+    /// Категория.
     /// </summary>
-    public class CategoryInfoDto
+    public class Category
     {
         /// <summary>
         /// Идентификатор.
@@ -19,7 +21,7 @@
         /// Наименование.
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Признак актуальности.
         /// </summary>
@@ -28,6 +30,11 @@
         /// <summary>
         /// Дата/время создания (UTC).
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime Created { get; set; }
+
+        /// <summary>
+        /// Объявления.
+        /// </summary>
+        public virtual List<Advert> Adverts { get; set; }
     }
 }
