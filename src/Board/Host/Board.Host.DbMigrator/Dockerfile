@@ -1,20 +1,10 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
-WORKDIR /app
-
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["src/Board/Host/Board.Host.DbMigrator/Board.Host.DbMigrator.csproj", "src/Board/Host/Board.Host.DbMigrator/"]
-RUN dotnet restore "src/Board/Host/Board.Host.DbMigrator/Board.Host.DbMigrator.csproj"
-COPY . .
-WORKDIR "/src/src/Board/Host/Board.Host.DbMigrator"
-RUN dotnet build "Board.Host.DbMigrator.csproj" -c Release -o /app/build
+COPY . /app
+WORKDIR /app/src/Board/Host/Board.Host.DbMigrator
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/publish
 
-FROM build AS publish
-RUN dotnet publish "Board.Host.DbMigrator.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Board.Host.DbMigrator.dll"]
