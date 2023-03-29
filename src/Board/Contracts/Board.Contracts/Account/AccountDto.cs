@@ -1,4 +1,6 @@
-﻿namespace Board.Contracts.Account
+﻿using System.Security.Claims;
+
+namespace Board.Contracts.Account
 {
     /// <summary>
     /// Информация об аккаунте.
@@ -24,5 +26,11 @@
         /// Признак блокировки.
         /// </summary>
         public bool IsBlocked { get; set; }
+
+
+        public bool IsAuthenticated { get; set; }
+        public string Scheme { get; set; }
+        public List<Claim> Claims { get; set; } = new List<Claim>();
+
     }
 }
