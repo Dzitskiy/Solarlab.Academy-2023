@@ -46,6 +46,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{A138D0FD-6C8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Host.DbMigrator", "src\Board\Host\Board.Host.DbMigrator\Board.Host.DbMigrator.csproj", "{5029B205-28AD-43E9-A095-AB29E1EC5394}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Board.Tests", "src\Board\Tests\Board.Tests\Board.Tests.csproj", "{EB39E297-5C09-4BE6-8666-677E2E614410}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{5029B205-28AD-43E9-A095-AB29E1EC5394}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5029B205-28AD-43E9-A095-AB29E1EC5394}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5029B205-28AD-43E9-A095-AB29E1EC5394}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB39E297-5C09-4BE6-8666-677E2E614410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB39E297-5C09-4BE6-8666-677E2E614410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB39E297-5C09-4BE6-8666-677E2E614410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB39E297-5C09-4BE6-8666-677E2E614410}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,5 +105,9 @@ Global
 		{12F1CEC9-6028-40A4-9494-0B04F50ABD6E} = {E46B8F06-9000-456C-A93F-DCBF3767035E}
 		{19835556-9F2F-45A4-9644-2288E9D819F8} = {CE061C4B-63AA-43E0-9057-B4F8008B3C6A}
 		{5029B205-28AD-43E9-A095-AB29E1EC5394} = {CE061C4B-63AA-43E0-9057-B4F8008B3C6A}
+		{EB39E297-5C09-4BE6-8666-677E2E614410} = {586B44F7-4061-40C1-9A68-35A3C0F8CB23}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58C3F7E7-8DA0-47D3-98F7-844AA3EEF659}
 	EndGlobalSection
 EndGlobal
