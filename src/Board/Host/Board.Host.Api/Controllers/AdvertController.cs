@@ -1,7 +1,6 @@
 ﻿using Board.Application.AppData.Contexts.Adverts.Services;
 using Board.Contracts;
 using Board.Contracts.Advert;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -42,9 +41,9 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<AdvertShortInfoDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Запрос объявлений");
-        
-        return await Task.Run(() => Ok(Enumerable.Empty<AdvertShortInfoDto>()), cancellationToken);
+        _logger.LogInformation("Запрос списка объявлений");
+        var result = await _advertService.GetAll(cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
@@ -60,7 +59,15 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => Ok(new AdvertInfoDto()), cancellationToken);
+        _logger.LogInformation($"Запрос объявления по идентификатору: {id}");
+        var result = await _advertService.Get(id, cancellationToken);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
     }
 
     /// <summary>
@@ -76,14 +83,12 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(AdvertInfoDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    [Authorize]
+    // [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateAdvertDto dto, CancellationToken cancellationToken)
     {
-        _logger.LogInformation($"{JsonConvert.SerializeObject(dto)}");
-
-        var result = await _advertService.AddAdvert(dto, cancellationToken);
-        
-        return await Task.Run(() => CreatedAtAction(nameof(GetById), new { result.Id }), cancellationToken);
+        _logger.LogInformation($"Запрос на создание объявления: {JsonConvert.SerializeObject(dto)}");
+        var result = await _advertService.Add(dto, cancellationToken);
+        return CreatedAtAction(nameof(Create), new { result.Id });
     }
 
     /// <summary>
@@ -106,6 +111,7 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateAdvertDto dto, CancellationToken cancellationToken)
     {
+        // TODO NotImplemented
         return await Task.Run(() => Ok(new AdvertInfoDto()), cancellationToken);
     }
 
@@ -130,6 +136,7 @@ public class AdvertController : ControllerBase
     public async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<UpdateAdvertDto> dto,
         CancellationToken cancellationToken)
     {
+        // TODO NotImplemented
         return await Task.Run(() => Ok(new AdvertInfoDto()), cancellationToken);
     }
 
@@ -145,6 +152,8 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
     {
-        return await Task.Run(NoContent, cancellationToken);
+        _logger.LogInformation($"Запрос на удаление объявления по идентификатору: {id}");
+        await _advertService.Delete(id, cancellationToken);
+        return NoContent();
     }
 }

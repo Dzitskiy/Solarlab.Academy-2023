@@ -22,6 +22,7 @@ namespace Board.Infrastucture.DataAccess.Contexts.Category.Repository
         /// <inheritdoc/>
         public async Task<Guid> AddAsync(Domain.Categories.Category model, CancellationToken cancellationToken)
         {
+            model.Created = DateTime.UtcNow;
             await _repository.AddAsync(model, cancellationToken);
             return model.Id;
         }
@@ -29,7 +30,7 @@ namespace Board.Infrastucture.DataAccess.Contexts.Category.Repository
         /// <inheritdoc/>
         public Task<List<Domain.Categories.Category>> GetActiveAsync(CancellationToken cancellationToken)
         {
-            return  _repository.GetAll().Where(s => s.IsActive).ToListAsync(cancellationToken);
+            return _repository.GetAll().Where(s => s.IsActive).ToListAsync(cancellationToken);
         }
 
         /// <inheritdoc/>

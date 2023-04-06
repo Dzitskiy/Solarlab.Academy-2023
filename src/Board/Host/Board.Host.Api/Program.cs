@@ -38,10 +38,12 @@ builder.Services.AddScoped((Func<IServiceProvider, DbContext>) (sp => sp.GetRequ
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IAdvertRepository, AdvertRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<IForbiddenWordsService, ForbiddenWordsService>();
 
 builder.Services.AddSingleton<IMapper>(new Mapper(GetMapperConfiguration()));
