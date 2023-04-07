@@ -10,7 +10,7 @@
             </summary>
             <response code="500">Произошла внутренняя ошибка.</response>
         </member>
-        <member name="M:Board.Host.Api.Controllers.AccountController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.AccountController})">
+        <member name="M:Board.Host.Api.Controllers.AccountController.#ctor(Microsoft.Extensions.Logging.ILogger{Board.Host.Api.Controllers.AccountController},Board.Application.AppData.Contexts.Adverts.Services.IAccountService)">
             <summary>
             Инициализирует экземпляр <see cref="T:Board.Host.Api.Controllers.AccountController"/>
             </summary>

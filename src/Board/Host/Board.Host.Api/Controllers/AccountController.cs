@@ -1,6 +1,12 @@
-﻿using Board.Contracts;
+﻿using Board.Application.AppData.Contexts.Adverts.Services;
+using Board.Contracts;
 using Board.Contracts.Account;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Threading;
 
 namespace Board.Host.Api.Controllers;
 
@@ -10,19 +16,22 @@ namespace Board.Host.Api.Controllers;
 /// <response code="500">Произошла внутренняя ошибка.</response>
 [ApiController]
 [Route("[controller]")]
+[AllowAnonymous]
 [Produces("application/json")]
 [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
 public class AccountController : ControllerBase
 {
     private readonly ILogger<AccountController> _logger;
+    private readonly IAccountService _accountService;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="AccountController"/>
     /// </summary>
     /// <param name="logger">Сервис логирования.</param>
-    public AccountController(ILogger<AccountController> logger)
+    public AccountController(ILogger<AccountController> logger, IAccountService accountService)
     {
         _logger = logger;
+        _accountService = accountService;
     }
 
     /// <summary>
@@ -42,7 +51,9 @@ public class AccountController : ControllerBase
     {
         _logger.LogInformation("Регистрация нового аккаунта.");
 
-        return await Task.Run(() => CreatedAtAction(nameof(Login), Guid.Empty), cancellation);
+        var result = await _accountService.RegisterAccountAsync (dto, cancellation); 
+        
+        return await Task.Run(() => CreatedAtAction(nameof(Login), result), cancellation);
     }
 
     /// <summary>
@@ -64,6 +75,29 @@ public class AccountController : ControllerBase
     {
         _logger.LogInformation("Вход в аккаунт.");
 
-        return await Task.Run(() => Ok(new LoginAccountDto()), cancellation);
+        var result = await _accountService.LoginAsync(dto, cancellation);
+
+        return await Task.Run(() => Ok(result), cancellation);
+    }
+
+    [HttpPost("logout")]
+    public async Task Logout(string token)
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
+
+    [HttpPost("GetUserInfo")]
+    public async Task<AccountDto> GetUserInfo(CancellationToken cancellation)
+    {
+        var result = await _accountService.GetCurrentAsync(cancellation);
+
+        return result;
+
+        //    new AccountDto
+        //{
+        //    Scheme = HttpContext.User.Identity.AuthenticationType,
+        //    IsAuthenticated = HttpContext.User.Identity.IsAuthenticated,
+        //    Claims = HttpContext.User.Claims.ToList()
+        //};
     }
 }

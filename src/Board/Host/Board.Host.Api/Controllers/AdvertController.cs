@@ -1,6 +1,7 @@
 ﻿using Board.Application.AppData.Contexts.Adverts.Services;
 using Board.Contracts;
 using Board.Contracts.Advert;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -75,6 +76,7 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(AdvertInfoDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateAdvertDto dto, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"{JsonConvert.SerializeObject(dto)}");
