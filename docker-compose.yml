@@ -28,7 +28,17 @@ services:
     depends_on:
       - "postgres"
 
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - "postgres"
+
   postgres:
+    container_name: postgres
     image: postgres
     environment:
       POSTGRES_DB: "Board"
