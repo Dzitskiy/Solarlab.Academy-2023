@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Users\**" />
+      <EmbeddedResource Remove="Users\**" />
+      <None Remove="Users\**" />
+    </ItemGroup>
+
+</Project>
