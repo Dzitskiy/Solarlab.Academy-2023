@@ -43,7 +43,8 @@ public class CategoryController : ControllerBase
     {
         _logger.LogInformation("Запрос категорий");
 
-        return await Task.Run(() => Ok(Enumerable.Empty<CategoryShortInfoDto>()), cancellationToken);
+        var result = await _categoryService.GetActiveAsync(cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
