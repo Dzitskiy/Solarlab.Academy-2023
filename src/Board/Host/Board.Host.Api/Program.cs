@@ -37,10 +37,12 @@ builder.Services.AddScoped((Func<IServiceProvider, DbContext>) (sp => sp.GetRequ
 // Add repositories to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAdvertRepository, AdvertRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IForbiddenWordsService, ForbiddenWordsService>();
 
