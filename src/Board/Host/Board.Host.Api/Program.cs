@@ -52,6 +52,8 @@ builder.Services.AddSingleton<IMapper>(new Mapper(GetMapperConfiguration()));
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors();
+
 #region Authentication & Authorization
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -126,6 +128,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials());
 
 app.UseHsts();
 
