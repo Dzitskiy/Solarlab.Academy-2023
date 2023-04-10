@@ -26,11 +26,26 @@ public class CreateAdvertDto
     /// <summary>
     /// Идентификатор категории.
     /// </summary>
-    public Guid CategoryId { get; set; }
+    [Required(ErrorMessage = "Категория не указана")]
+    public Guid? CategoryId { get; set; }
 
     /// <summary>
-    /// Теги.
+    /// Ссылка на изображение.
     /// </summary>
-    [MaxLength(10, ErrorMessage = "Объявление содержит слишком много тегов")]
-    public string[] Tags { get; set; }
+    [StringLength(250)]
+    [ForbiddenWordsValidation]
+    public string ImageUrl { get; set; }
+
+    /// <summary>
+    /// Цена.
+    /// </summary>
+    public decimal? Price { get; set; }
+
+    /// <summary>
+    /// Полный адрес.
+    /// </summary>
+    [Required(ErrorMessage = "Адрес не указан")]
+    [StringLength(250, ErrorMessage = "Адрес либо слишком короткий, либо слишком длинный", MinimumLength = 3)]
+    [ForbiddenWordsValidation]
+    public string Address { get; set; }
 }

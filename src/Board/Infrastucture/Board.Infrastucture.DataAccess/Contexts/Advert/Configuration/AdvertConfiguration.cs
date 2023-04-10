@@ -19,6 +19,9 @@ namespace Board.Infrastucture.DataAccess.Contexts.Posts.Configuration
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Name).HasMaxLength(256).IsRequired();
             builder.Property(a => a.Description).HasMaxLength(1024).IsRequired();
+            builder.Property(a => a.Price).IsRequired(false);
+            builder.Property(a => a.ImageUrl).HasMaxLength(250).IsRequired(false);
+            builder.Property(a => a.Address).HasMaxLength(250).IsRequired();
             builder.Property(a => a.Created).HasConversion(s => s, s => DateTime.SpecifyKind(s, DateTimeKind.Utc));
         }
     }
