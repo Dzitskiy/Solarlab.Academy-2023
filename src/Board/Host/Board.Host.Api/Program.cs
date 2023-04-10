@@ -146,3 +146,5 @@ static MapperConfiguration GetMapperConfiguration()
     configuration.AssertConfigurationIsValid();
     return configuration;
 }
+
+public partial class Program {}
