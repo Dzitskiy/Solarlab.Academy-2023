@@ -1,12 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using Board.Application.AppData.Contexts.Adverts.Repositories;
-using Board.Domain.Account;
 using Board.Infrastucture.Repository;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
-
-namespace Board.Infrastucture.DataAccess.Contexts.Posts.Repository;
+namespace Board.Infrastucture.DataAccess.Contexts.Account.Repository;
 
 /// <inheritdoc cref="IAccountRepository"/>
 public class AccountRepository : IAccountRepository
@@ -21,24 +19,24 @@ public class AccountRepository : IAccountRepository
     }
 
     /// <inheritdoc/>
-    public async Task<Guid> AddAsync(Account model, CancellationToken cancellation)
+    public async Task<Guid> AddAsync(Domain.Account.Account model, CancellationToken cancellation)
     {
         await _repository.AddAsync(model, cancellation);
         return model.Id;
     }
 
     /// <inheritdoc/>
-    public Task<Account> FindById(Guid id, CancellationToken cancellation)
+    public Task<Domain.Account.Account> FindById(Guid id, CancellationToken cancellation)
     {
         return _repository.GetByIdAsync(id, cancellation);  
     }
 
     /// <inheritdoc/>
-    public async Task<Account> FindWhere(Expression<Func<Account, bool>> predicate, CancellationToken cancellation)
+    public async Task<Domain.Account.Account> FindWhere(Expression<Func<Domain.Account.Account, bool>> predicate, CancellationToken cancellation)
     {
         var data = _repository.GetAllFiltered(predicate);
 
-        Account account = await data.Where(predicate).FirstOrDefaultAsync(cancellation);
+        Domain.Account.Account account = await data.Where(predicate).FirstOrDefaultAsync(cancellation);
 
         return account;
     }

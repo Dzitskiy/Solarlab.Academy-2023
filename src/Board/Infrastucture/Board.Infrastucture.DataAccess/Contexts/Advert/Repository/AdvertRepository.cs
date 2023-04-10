@@ -2,11 +2,12 @@
 using AutoMapper.QueryableExtensions;
 using Board.Application.AppData.Contexts.Adverts.Repositories;
 using Board.Contracts.Advert;
-using Board.Domain.Adverts;
 using Board.Infrastucture.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Board.Infrastucture.DataAccess.Contexts.Posts.Repository;
+namespace Board.Infrastucture.DataAccess.Contexts.Advert.Repository;
+
+using Advert = Domain.Adverts.Advert;
 
 /// <inheritdoc cref="IAdvertRepository"/>
 public class AdvertRepository : IAdvertRepository

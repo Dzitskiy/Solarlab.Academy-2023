@@ -8,7 +8,6 @@ using Board.Contracts.Advert;
 using Board.Contracts.Interfaces;
 using Board.Infrastucture.DataAccess;
 using Board.Infrastucture.DataAccess.Contexts.Category.Repository;
-using Board.Infrastucture.DataAccess.Contexts.Posts.Repository;
 using Board.Infrastucture.DataAccess.Interfaces;
 using Board.Infrastucture.MapProfiles;
 using Board.Infrastucture.Repository;
@@ -22,6 +21,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Board.Infrastucture.DataAccess.Contexts.Account.Repository;
+using Board.Infrastucture.DataAccess.Contexts.Advert.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,14 +1,10 @@
-﻿using Board.Domain.Adverts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Board.Infrastucture.DataAccess.Contexts.Posts.Configuration
+namespace Board.Infrastucture.DataAccess.Contexts.Advert.Configuration
 {
+    using Advert = Domain.Adverts.Advert;
+
     /// <summary>
     /// Конфигурация сущности объявления.
     /// </summary>
