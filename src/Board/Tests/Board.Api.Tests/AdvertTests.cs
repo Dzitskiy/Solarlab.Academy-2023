@@ -41,6 +41,7 @@ namespace Board.Api.Tests
 
             Assert.Equal("test_advert_name", result!.Name);
             Assert.Equal("test_desc", result.Description);
+            Assert.Equal("new_prostokvashino", result.Address);
             Assert.True(result.IsActive);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -55,7 +56,8 @@ namespace Board.Api.Tests
             {
                 Name = "test_name",
                 Description = "test_description",
-                CategoryId = DataSeedHelper.TestCategoryId
+                CategoryId = DataSeedHelper.TestCategoryId,
+                Address = "some_city"
             };
 
 
@@ -79,6 +81,7 @@ namespace Board.Api.Tests
 
             Assert.Equal(model.Name, advert!.Name);
             Assert.Equal(model.Description, advert.Description);
+            Assert.Equal(model.Address, advert.Address);
             Assert.True(advert.IsActive);
         }
     }
