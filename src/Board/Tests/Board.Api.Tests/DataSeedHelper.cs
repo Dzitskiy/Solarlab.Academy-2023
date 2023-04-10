@@ -28,7 +28,8 @@ namespace Board.Api.Tests
                 Description = "test_desc",
                 IsActive = true,
                 Created = DateTime.UtcNow,
-                CategoryId = testCategory.Id
+                CategoryId = testCategory.Id,
+                Address = "new_prostokvashino"
             };
             db.Add(advert);
 
