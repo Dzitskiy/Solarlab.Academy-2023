@@ -41,5 +41,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         host: ${{ secrets.SSH_HOST }}
         password: ${{ secrets.SSH_PASSWORD }}
-        script: 'mkdir test_deploy '
- 
+        script: |
+          cd app/Solarlab.Academy-2023/
+          git pull
+          docker-compose up -d --build
