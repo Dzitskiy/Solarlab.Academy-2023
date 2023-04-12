@@ -23,6 +23,21 @@ public class Advert
     public string Description { get; set; }
 
     /// <summary>
+    /// Цена.
+    /// </summary>
+    public decimal? Price { get; set; }
+
+    /// <summary>
+    /// Ссылка на изображение.
+    /// </summary>
+    public string ImageUrl { get; set; }
+
+    /// <summary>
+    /// Полный адрес.
+    /// </summary>
+    public string Address { get; set; }
+    
+    /// <summary>
     /// Признак актуальности.
     /// </summary>
     public bool IsActive { get; set; }
