@@ -35,5 +35,11 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy
-      run: echo "Deploy..."
+    - name: Deploy to VPS ( ${{ secrets.SSH_HOST }} )
+      uses: appleboy/ssh-action@master
+      with:
+        username: ${{ secrets.SSH_USERNAME }}
+        host: ${{ secrets.SSH_HOST }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: 'mkdir test_deploy'
+ 
