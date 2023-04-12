@@ -41,5 +41,5 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         host: ${{ secrets.SSH_HOST }}
         password: ${{ secrets.SSH_PASSWORD }}
-        script: 'mkdir test_deploy'
+        script: 'mkdir test_deploy '
  
