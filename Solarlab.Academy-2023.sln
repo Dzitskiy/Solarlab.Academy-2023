@@ -48,10 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Host.DbMigrator", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Tests", "src\Board\Tests\Board.Tests\Board.Tests.csproj", "{EB39E297-5C09-4BE6-8666-677E2E614410}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadTests", "LoadTests", "{94CB3764-92F9-4014-AA2F-1B1AEEF78CDC}"
-	ProjectSection(SolutionItems) = preProject
-		Test.js = Test.js
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Board.Api.Tests", "src\Board\Tests\Board.Api.Tests\Board.Api.Tests.csproj", "{EB0F2087-C4B4-4140-896C-E7F14725EEF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +88,10 @@ Global
 		{EB39E297-5C09-4BE6-8666-677E2E614410}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB39E297-5C09-4BE6-8666-677E2E614410}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB39E297-5C09-4BE6-8666-677E2E614410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB0F2087-C4B4-4140-896C-E7F14725EEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB0F2087-C4B4-4140-896C-E7F14725EEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB0F2087-C4B4-4140-896C-E7F14725EEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB0F2087-C4B4-4140-896C-E7F14725EEF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,7 +112,6 @@ Global
 		{19835556-9F2F-45A4-9644-2288E9D819F8} = {CE061C4B-63AA-43E0-9057-B4F8008B3C6A}
 		{5029B205-28AD-43E9-A095-AB29E1EC5394} = {CE061C4B-63AA-43E0-9057-B4F8008B3C6A}
 		{EB39E297-5C09-4BE6-8666-677E2E614410} = {586B44F7-4061-40C1-9A68-35A3C0F8CB23}
-		{94CB3764-92F9-4014-AA2F-1B1AEEF78CDC} = {586B44F7-4061-40C1-9A68-35A3C0F8CB23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58C3F7E7-8DA0-47D3-98F7-844AA3EEF659}
