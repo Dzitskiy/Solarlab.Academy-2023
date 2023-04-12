@@ -50,7 +50,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Tests", "src\Board\Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadTests", "LoadTests", "{94CB3764-92F9-4014-AA2F-1B1AEEF78CDC}"
 	ProjectSection(SolutionItems) = preProject
-		Tests.js = Tests.js
+		Test.js = Test.js
 	EndProjectSection
 EndProject
 Global
