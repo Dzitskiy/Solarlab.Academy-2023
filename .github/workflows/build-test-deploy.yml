@@ -8,7 +8,6 @@ on:
     branches: [ "master" ]
     paths-ignore:
     - 'README.md'
-
 env:
   DOTNET_VERSION: '6.0.x'
   CONFIGURATION: 'Release'
@@ -16,10 +15,8 @@ env:
 jobs:
 
   build-and-test:
-    name: build-and-test
-    
-    runs-on: ubuntu-latest
-    
+    name: build-and-test    
+    runs-on: ubuntu-latest    
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -37,5 +34,5 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
     - name: Deploy
+      run: echo "Deploy..."
