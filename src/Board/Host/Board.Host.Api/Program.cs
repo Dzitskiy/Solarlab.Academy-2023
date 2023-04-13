@@ -3,26 +3,25 @@ using Board.Application.AppData.Contexts.Adverts.Repositories;
 using Board.Application.AppData.Contexts.Adverts.Services;
 using Board.Application.AppData.Contexts.Categories.Repositories;
 using Board.Application.AppData.Contexts.Categories.Services;
+using Board.Application.AppData.Contexts.Files.Repositories;
+using Board.Application.AppData.Contexts.Files.Services;
 using Board.Application.AppData.Services;
 using Board.Contracts.Advert;
 using Board.Contracts.Interfaces;
 using Board.Infrastucture.DataAccess;
+using Board.Infrastucture.DataAccess.Contexts.Account.Repository;
+using Board.Infrastucture.DataAccess.Contexts.Advert.Repository;
 using Board.Infrastucture.DataAccess.Contexts.Category.Repository;
+using Board.Infrastucture.DataAccess.Contexts.Files.Repository;
 using Board.Infrastucture.DataAccess.Interfaces;
 using Board.Infrastucture.MapProfiles;
 using Board.Infrastucture.Repository;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Board.Infrastucture.DataAccess.Contexts.Account.Repository;
-using Board.Infrastucture.DataAccess.Contexts.Advert.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,12 +37,14 @@ builder.Services.AddScoped((Func<IServiceProvider, DbContext>) (sp => sp.GetRequ
 // Add repositories to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<IAdvertRepository, AdvertRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IAdvertRepository, AdvertRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAdvertService, AdvertService>();
@@ -153,6 +154,7 @@ static MapperConfiguration GetMapperConfiguration()
     {
         cfg.AddProfile<CategoryProfile>();
         cfg.AddProfile<AdvertProfile>();
+        cfg.AddProfile<FileProfile>();
     });
     configuration.AssertConfigurationIsValid();
     return configuration;
