@@ -8,7 +8,7 @@
         /// <summary>
         /// Идентификатор файла.
         /// </summary>
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Наименование файла.
@@ -16,13 +16,13 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// ContentType файла.
+        /// Дата создания файла.
         /// </summary>
-        public string ContentType { get; set; }
+        public DateTime Created { get; set; }
 
         /// <summary>
         /// Размер файла.
         /// </summary>
-        public long Length { get; set; }
+        public int Length { get; set; }
     }
 }

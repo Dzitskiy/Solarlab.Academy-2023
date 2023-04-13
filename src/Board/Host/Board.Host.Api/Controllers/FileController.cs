@@ -1,6 +1,8 @@
-﻿using Board.Contracts;
+﻿using Board.Application.AppData.Contexts.Files.Services;
+using Board.Contracts;
 using Board.Contracts.File;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Board.Host.Api.Controllers;
 
@@ -15,14 +17,17 @@ namespace Board.Host.Api.Controllers;
 public class FileController : ControllerBase
 {
     private readonly ILogger<FileController> _logger;
+    private readonly IFileService _fileService;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="FileController"/>
     /// </summary>
+    /// <param name="fileService">Сервис работы с файлами.</param>
     /// <param name="logger">Сервис логирования.</param>
-    public FileController(ILogger<FileController> logger)
+    public FileController(IFileService fileService, ILogger<FileController> logger)
     {
         _logger = logger;
+        _fileService = fileService;
     }
 
     /// <summary>
@@ -36,9 +41,10 @@ public class FileController : ControllerBase
     [HttpGet("{id}/info")]
     [ProducesResponseType(typeof(FileInfoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetInfoById(string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetInfoById(Guid id, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(Ok(new FileInfoDto()));
+        var result = await _fileService.GetInfoByIdAsync(id, cancellationToken);
+        return result == null ? NotFound() : Ok(result);
     }
 
     /// <summary>
@@ -49,15 +55,22 @@ public class FileController : ControllerBase
     /// <response code="201">Файл успешно загружен.</response>
     /// <response code="400">Модель данных запроса невалидна.</response>
     [HttpPost]
-    [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = long.MaxValue)]
     [DisableRequestSizeLimit]
     public async Task<IActionResult> Upload(IFormFile file, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => CreatedAtAction(nameof(Download), new { string.Empty }), cancellationToken);
+        var bytes = await GetBytesAsync(file, cancellationToken);
+        var fileDto = new FileDto
+        {
+            Content = bytes,
+            ContentType = file.ContentType,
+            Name = file.FileName
+        };
+        var result = await _fileService.UploadAsync(fileDto, cancellationToken);
+        return StatusCode((int)HttpStatusCode.Created, result);
     }
-
 
     /// <summary>
     /// Скачивание файла по идентификатору.
@@ -70,9 +83,17 @@ public class FileController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Download(string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Download(Guid id, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(File(new MemoryStream(), string.Empty, string.Empty));
+        var result = await _fileService.DownloadAsync(id, cancellationToken);
+
+        if (result == null) 
+        { 
+            return NotFound(); 
+        }
+
+        Response.ContentLength = result.Content.Length;
+        return File(result.Content, result.ContentType, result.Name, true);
     }
 
 
@@ -86,8 +107,16 @@ public class FileController : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(NoContent());
+        await _fileService.DeleteAsync(id, cancellationToken);
+        return NoContent();
+    }
+
+    private static async Task<byte[]> GetBytesAsync(IFormFile file, CancellationToken cancellationToken)
+    {
+        using var ms = new MemoryStream();
+        await file.CopyToAsync(ms, cancellationToken);
+        return ms.ToArray();
     }
 }
