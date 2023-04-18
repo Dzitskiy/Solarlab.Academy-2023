@@ -28,9 +28,12 @@ namespace Board.Infrastucture.DataAccess.Contexts.Category.Repository
         }
 
         /// <inheritdoc/>
-        public Task<List<Domain.Categories.Category>> GetActiveAsync(CancellationToken cancellationToken)
+        public Task<CategoryInfoDto[]> GetActiveAsync(CancellationToken cancellationToken)
         {
-            return _repository.GetAll().Where(s => s.IsActive).ToListAsync(cancellationToken);
+            return _repository.GetAll().AsNoTracking()
+                .Where(x => x.IsActive)
+                .ProjectTo<CategoryInfoDto>(_mapper.ConfigurationProvider)
+                .ToArrayAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
