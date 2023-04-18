@@ -28,6 +28,6 @@ namespace Board.Application.AppData.Contexts.Categories.Services
         /// </summary>
         /// <param name="cancellationToken">Токен отмены.</param>
         /// <returns>Список активных категорий.</returns>
-        Task<List<CategoryInfoDto>> GetActiveAsync(CancellationToken cancellationToken);
+        Task<CategoryInfoDto[]> GetActiveAsync(CancellationToken cancellationToken);
     }
 }

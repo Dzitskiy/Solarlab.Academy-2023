@@ -34,6 +34,8 @@ builder.Services.AddDbContext<BoardDbContext>((Action<IServiceProvider, DbContex
 
 builder.Services.AddScoped((Func<IServiceProvider, DbContext>) (sp => sp.GetRequiredService<BoardDbContext>()));
 
+builder.Services.AddMemoryCache();
+
 // Add repositories to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();

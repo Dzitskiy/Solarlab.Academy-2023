@@ -2,20 +2,24 @@
 using Board.Application.AppData.Contexts.Categories.Repositories;
 using Board.Contracts.Category;
 using Board.Domain.Categories;
-using System.Xml.Linq;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Board.Application.AppData.Contexts.Categories.Services
 {
     /// <inheritdoc cref="ICategoryService"/>
     public class CategoryService : ICategoryService
     {
+        public const string ActiveCategoriesCachingKey = "ActiveCategories";
+
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _memoryCache;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, IMemoryCache memoryCache)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
+            _memoryCache = memoryCache;
         }
 
         /// <inheritdoc/>
@@ -26,18 +30,22 @@ namespace Board.Application.AppData.Contexts.Categories.Services
         }
 
         /// <inheritdoc/>
-        public async Task<List<CategoryInfoDto>> GetActiveAsync(CancellationToken cancellationToken)
+        public async Task<CategoryInfoDto[]> GetActiveAsync(CancellationToken cancellationToken)
         {
-            var entities = await _categoryRepository.GetActiveAsync(cancellationToken);
-            var result = entities.Select(s => new CategoryInfoDto
+            if (_memoryCache.TryGetValue(ActiveCategoriesCachingKey, out CategoryInfoDto[] result))
             {
-                Name = s.Name,
-                ParentId = s.ParentId,
-                IsActive = s.IsActive,
-                CreatedAt = s.Created,
-                Id = s.Id,
-            });
-            return result.ToList();
+                return result;
+            }
+
+            result = await _categoryRepository.GetActiveAsync(cancellationToken);
+
+            var options = new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+            };
+            _memoryCache.Set(ActiveCategoriesCachingKey, result, options);
+
+            return result;
         }
 
         /// <inheritdoc/>
