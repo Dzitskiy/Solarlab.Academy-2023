@@ -43,7 +43,7 @@ namespace Board.Tests
 
             categoryRepositoryMock.Setup(x => x.GetByIdAsync(id, token)).ReturnsAsync(() => expected);
 
-            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object);
+            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object, null, null);
 
             // Act
             var result = await service.GetByIdAsync(id, token);
@@ -85,7 +85,7 @@ namespace Board.Tests
 
             categoryRepositoryMock.Setup(x => x.GetByIdAsync(id, token)).ReturnsAsync(() => expected);
 
-            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object);
+            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object, null, null);
 
             // Act
             var result = await service.GetByIdAsync(id, token);
@@ -119,7 +119,7 @@ namespace Board.Tests
 
             categoryRepositoryMock.Setup(x => x.GetByIdAsync(id, token)).ReturnsAsync(() => expected);
 
-            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object);
+            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object, null, null);
 
             // Act
             var result = await service.GetByIdAsync(id, token);
@@ -150,7 +150,7 @@ namespace Board.Tests
 
             categoryRepositoryMock.Setup(x => x.GetByIdAsync(id, token)).ReturnsAsync(() => null);
 
-            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object);
+            CategoryService service = new CategoryService(categoryRepositoryMock.Object, mapperMock.Object, null, null);
 
             // Act
             var result = await service.GetByIdAsync(id, token);

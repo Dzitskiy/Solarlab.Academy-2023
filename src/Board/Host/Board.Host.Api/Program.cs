@@ -36,6 +36,14 @@ builder.Services.AddScoped((Func<IServiceProvider, DbContext>) (sp => sp.GetRequ
 
 builder.Services.AddMemoryCache();
 
+builder.Services.AddDistributedMemoryCache( 
+    //options=> options.SizeLimit = 1000
+    );
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 // Add repositories to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
