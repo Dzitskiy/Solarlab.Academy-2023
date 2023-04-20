@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+
+ redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - solarlab-academy-network
+
+networks:
+  solarlab-academy-network:
