@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Board.Application.AppData.Contexts.Adverts.Repositories;
+using Board.Application.AppData.Services;
 using Board.Contracts.Advert;
 using Board.Domain.Adverts;
 
@@ -10,16 +11,20 @@ public class AdvertService : IAdvertService
 {
     private readonly IAdvertRepository _advertRepository;
     private readonly IMapper _mapper;
+    private readonly IRabbitMqService _rabbitMqService;
 
-    public AdvertService(IAdvertRepository advertRepository, IMapper mapper)
+    public AdvertService(IAdvertRepository advertRepository, IMapper mapper, IRabbitMqService rabbitMqService)
     {
         _advertRepository = advertRepository;
         _mapper = mapper;
+        _rabbitMqService = rabbitMqService;
     }
 
     /// <inheritdoc />
     public Task<AdvertShortInfoDto[]> GetAll(CancellationToken cancellationToken)
     {
+        _rabbitMqService.SendMessage("Message from AdvertService.GetAll()");
+
         return _advertRepository.GetAll(cancellationToken);
     }
 
