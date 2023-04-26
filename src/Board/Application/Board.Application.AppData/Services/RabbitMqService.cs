@@ -32,7 +32,7 @@ namespace Board.Application.AppData.Services
                 // Persistent delivery mode.
                 props.DeliveryMode = 2;
 
-                channel.QueueDeclare(queue: "test_queue",
+                channel.QueueDeclare(queue: "board_queue",
                                durable: false,
                                exclusive: false,
                                autoDelete: false,
@@ -41,7 +41,7 @@ namespace Board.Application.AppData.Services
                 var body = Encoding.UTF8.GetBytes(message);
 
                 channel.BasicPublish(exchange: string.Empty,
-                               routingKey: "test_queue",
+                               routingKey: "board_queue",
                                basicProperties: null,
                                body: body);
             }

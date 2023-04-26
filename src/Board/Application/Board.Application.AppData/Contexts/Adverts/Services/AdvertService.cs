@@ -23,7 +23,7 @@ public class AdvertService : IAdvertService
     /// <inheritdoc />
     public Task<AdvertShortInfoDto[]> GetAll(CancellationToken cancellationToken)
     {
-        _rabbitMqService.SendMessage("Message from AdvertService.GetAll()");
+        _rabbitMqService.SendMessage("Запрошено получение рекомендаций.");
 
         return _advertRepository.GetAll(cancellationToken);
     }

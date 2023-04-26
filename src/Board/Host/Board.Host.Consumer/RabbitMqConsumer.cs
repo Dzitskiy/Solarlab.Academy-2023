@@ -1,6 +1,5 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Diagnostics;
 using System.Text;
 
 namespace Board.Host.Consumer
@@ -23,29 +22,27 @@ namespace Board.Host.Consumer
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            channel.QueueDeclare(queue: "test_queue",
+            channel.QueueDeclare(queue: "board_queue",
                                  durable: false,
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
 
-            Console.WriteLine(" [*] Waiting for messages.");
+            Console.WriteLine(" [*] Waiting for messages...");
 
             var consumer = new EventingBasicConsumer(channel);
 
             consumer.Received += (model, ea) =>
             {
-                _logger.LogInformation("Start recieving message");
-
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
 
-                _logger.LogWarning("Message received");
+                _logger.LogInformation("Message received");
 
-                Console.WriteLine($" [x] Received {message}");
+                Console.WriteLine($" [v] [{DateTime.UtcNow}] Received: {message}");
             };
 
-            channel.BasicConsume(queue: "test_queue",
+            channel.BasicConsume(queue: "board_queue",
                                  autoAck: true,
                                  consumer: consumer);
 

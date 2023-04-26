@@ -45,7 +45,6 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
-// Непонятно, как этим пользоваться.
 //builder.Services.AddRabbitMqClient(builder.Configuration.GetSection("RabbitMq"))
 //    .AddProductionExchange("test_prod_exchange", builder.Configuration.GetSection("RabbitMqExchange"));
 
