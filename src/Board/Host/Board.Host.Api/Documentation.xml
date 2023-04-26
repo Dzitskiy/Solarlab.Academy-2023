@@ -257,5 +257,10 @@
             <response code="403">Доступ запрещён.</response>
             <response code="404">Файл с указанным идентификатором не найден.</response>
         </member>
+        <member name="T:Board.Host.Api.MyLogger.MyLogger`1">
+            <summary>
+            
+            </summary>
+        </member>
     </members>
 </doc>

@@ -2,7 +2,6 @@
 using Board.Contracts.Account;
 using Board.Domain.Account;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -44,7 +43,7 @@ public class AccountService : IAccountService
         {
             throw new Exception($"Пользователь с логином '{accountDto.Login}' уже зарегистрирован!");
         }
-        
+
         await _accountRepository.AddAsync(account, cancellation);
 
         return account.Id;
@@ -102,12 +101,13 @@ public class AccountService : IAccountService
         var id = Guid.Parse(claimId);
         var user = await _accountRepository.FindById(id, cancellation);
 
-        if (user == null) {
+        if (user == null)
+        {
             throw new Exception($"Не найден пользователь с идентификатором '{id}'.");
         }
 
         //TODO
-        var  result = new AccountDto
+        var result = new AccountDto
         {
             Id = user.Id,
             Login = user.Login

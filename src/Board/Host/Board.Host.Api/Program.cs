@@ -22,6 +22,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Board.Host.Api.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
+//builder.Services.AddRabbitMqClient(builder.Configuration.GetSection("RabbitMq"))
+//    .AddProductionExchange("test_prod_exchange", builder.Configuration.GetSection("RabbitMqExchange"));
+
 // Add repositories to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -59,6 +63,8 @@ builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<IForbiddenWordsService, ForbiddenWordsService>();
+builder.Services.AddScoped<IRabbitMqService, RabbitMqService>();
+builder.Services.AddSingleton<IBoardApiClient, BoardApiClient>();
 
 builder.Services.AddSingleton<IMapper>(new Mapper(GetMapperConfiguration()));
 
